@@ -1,0 +1,99 @@
+---
+// Starbook wormhole — proof of concept route
+const version = '0.0.1';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Starbook — Wormhole Test</title>
+    <style>
+      :root {
+        --deep-space: #0b0e14;
+        --astro-flare: #ff5d01;
+        --nebula-violet: #7b61ff;
+        --star-white: #e8eaf0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: var(--deep-space);
+        color: var(--star-white);
+        font-family: 'Inter', system-ui, sans-serif;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      .card {
+        border: 1px solid var(--nebula-violet);
+        border-radius: 12px;
+        padding: 3rem 4rem;
+        text-align: center;
+        max-width: 560px;
+        background: rgba(123, 97, 255, 0.05);
+        backdrop-filter: blur(8px);
+      }
+
+      .badge {
+        display: inline-block;
+        background: var(--astro-flare);
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.3rem 0.8rem;
+        border-radius: 999px;
+        margin-bottom: 1.5rem;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        margin-bottom: 1rem;
+      }
+
+      h1 span {
+        color: var(--astro-flare);
+      }
+
+      p {
+        color: #8892a4;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+      }
+
+      .version {
+        font-family: 'Courier New', monospace;
+        font-size: 0.8rem;
+        color: var(--nebula-violet);
+        border: 1px solid var(--nebula-violet);
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="badge">Wormhole Active</div>
+      <h1>Hello from <span>Starbook</span></h1>
+      <p>
+        The Astro integration is correctly injecting routes.
+        This page is rendered server-side — zero client JS.
+      </p>
+      <span class="version">v{version}</span>
+    </div>
+  </body>
+</html>
