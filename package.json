@@ -1,8 +1,10 @@
 {
   "name": "starbook-monorepo",
   "private": true,
+  "packageManager": "pnpm@10.18.3",
   "scripts": {
     "dev": "turbo run dev",
+    "dev:workshop": "turbo run dev --filter=starbook --filter=apps-workshop",
     "build": "turbo run build",
     "clean": "turbo run clean"
   },
