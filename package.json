@@ -3,12 +3,16 @@
   "private": true,
   "packageManager": "pnpm@10.18.3",
   "scripts": {
+    "setup": "corepack pnpm install",
     "dev": "turbo run dev",
     "dev:workshop": "turbo run dev --filter=starbook --filter=apps-workshop",
+    "dev:workshop:bootstrap": "corepack pnpm --filter starbook build && turbo run dev --filter=starbook --filter=apps-workshop",
     "build": "turbo run build",
+    "build:packages": "corepack pnpm --filter starbook build && corepack pnpm --filter apps-workshop build",
     "clean": "turbo run clean"
   },
   "devDependencies": {
+    "pnpm": "10.18.3",
     "turbo": "^2.0.0"
   }
 }
