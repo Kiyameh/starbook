@@ -2,46 +2,49 @@
 
 Documento de continuidad. Registra el estado exacto de la conceptualización en curso para poder retomar el flujo sin perder contexto. Actualizar al final de cada sesión de trabajo.
 
-**Última actualización:** 25 mar 2026
+**Última actualización:** 26 mar 2026
 
 ---
 
 ## Estado actual
 
-La conceptualización del Paso 0 está **completa y cerrada**. Todos los aspectos fundamentales del producto están definidos y documentados en `conceptualizacion.md`.
+La conceptualización del Paso 0 está **completa y cerrada**.  
+La decisión bloqueante de Iteración 1 ya fue resuelta: el usuario principal del MVP Ignition es el **Autor de componentes**.  
+Además, ya existe `user_journeys.md` con los flujos y criterios de aceptación iniciales.
+Se adoptó una estrategia **incremental**: generar documentos base y refinar decisiones durante la implementación.
 
 ---
 
 ## Próximo paso pendiente
 
-### Pregunta sin responder (bloquea los User Journeys)
+### Arranque de ejecución incremental
 
-Antes de escribir los User Journeys necesitamos confirmar quién es el **usuario principal del Uiverse** en la fase Ignition (v0.1). La respuesta condiciona los criterios de aceptación y las prioridades del MVP.
+Con los documentos base ya creados, el siguiente paso es iniciar el **Incremento 0** de desarrollo según `planificacion_incremental.md`.
 
-Las opciones no son excluyentes, pero sí tienen pesos distintos en el MVP:
+Decisión registrada para Ignition:
 
-| Opción | Usuario | Qué implica para el MVP |
-| --- | --- | --- |
-| **A** | **Autor de componentes** — dev que crea las Stars y las Phases, define Wormholes | Ignition se centra en el flujo de authoring y detección de star files |
-| **B** | **Consumidor del catálogo** — dev, diseñador o QA que navega el Uiverse | Ignition se centra en la experiencia de navegación y visualización |
-| **C** | **Integrador** — dev que añade Starbook a un proyecto Astro existente | Siempre relevante (es el punto de entrada); más ligado a DX que a features |
+- **Principal:** Autor de componentes.
+- **Secundarios:** Consumidor del catálogo e Integrador.
+- **Implicación:** el MVP prioriza authoring (`.star.ts`, Phases, Wormhole SSR) sin descuidar navegación básica ni setup de integración.
 
-**Acción al inicio de la próxima sesión:** responder esta pregunta y luego proceder a crear `user_journeys.md`.
+**Acción al inicio de la próxima sesión:** comenzar Incremento 0 (base operativa).
 
 ---
 
-## Documentos pendientes de crear
+## Documentos de contexto disponibles
 
-Los documentos de contexto que quedan por generar, en orden de dependencia:
+Documentos creados en versión base:
 
 | # | Archivo | Contenido | Depende de |
 | --- | --- | --- | --- |
-| 1 | `user_journeys.md` | Flujos end-to-end del autor y consumidor del Uiverse | Respuesta a "usuario principal" |
-| 2 | `domain_model.md` | Entidades, invariantes y tipos TypeScript de referencia | `user_journeys.md` |
-| 3 | `arquitectura_monorepo.md` | Relación entre `packages/` y `apps/`, flujo de build | `domain_model.md` |
-| 4 | `formato_star.md` | Spec del formato `.star.ts` y `.star.mdx`, ejemplos canónicos | `domain_model.md` |
-| 5 | `wormhole.md` | Decisiones y limitaciones técnicas del mecanismo de inyección | `formato_star.md` |
-| 6 | `mvp_ignition.md` | Scope exacto de v0.1 con criterios de aceptación verificables | Todos los anteriores |
+| 1 | `conceptualizacion.md` | Decisiones de producto y marco conceptual | — |
+| 2 | `user_journeys.md` | Flujos E2E y aceptación por actor | `conceptualizacion.md` |
+| 3 | `domain_model.md` | Entidades, invariantes y tipos base | `user_journeys.md` |
+| 4 | `arquitectura_monorepo.md` | Relación de workspaces y contratos internos | `domain_model.md` |
+| 5 | `formato_star.md` | Spec base de `.star.ts` y `.star.mdx` | `domain_model.md` |
+| 6 | `wormhole.md` | Contrato base y límites técnicos | `formato_star.md` |
+| 7 | `mvp_ignition.md` | Scope y criterios globales de v0.1 | Todos los anteriores |
+| 8 | `planificacion_incremental.md` | Roadmap incremental desde core hasta MVP | Todos los anteriores |
 
 ---
 
@@ -74,5 +77,5 @@ El flujo sigue este orden de iteraciones (de general a concreto):
 ## Cómo empezar la próxima sesión
 
 1. Leer este archivo.
-2. Responder: ¿quién es el usuario principal del Uiverse en Ignition — Autor (A), Consumidor (B) o ambos con pesos distintos?
-3. Crear `user_journeys.md` con los flujos confirmados.
+2. Revisar `planificacion_incremental.md` y confirmar orden de incrementos.
+3. Ejecutar Incremento 0 y registrar decisiones tomadas.
