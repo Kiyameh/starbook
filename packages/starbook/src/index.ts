@@ -13,20 +13,38 @@ export type {
 } from './modules/catalog/index.js';
 export type { CatalogBuildResult, CatalogDiagnostic } from './types/index.js';
 export type { ParsedPhase, ParsedStarFile } from './modules/parser/index.js';
+export {
+  buildUiversePathParam,
+  listPhaseStaticParams,
+  parseUiverseUrlParam,
+  resolveUiversePath,
+} from './modules/uiverse-path/index.js';
+export type { ResolvedUiversePhase, ResolveUiversePathResult } from './modules/uiverse-path/index.js';
 
-/** Absolute path to the injected route (resolves from dist/ at runtime). */
-const previewTestPage = fileURLToPath(new URL('../src/pages/test.astro', import.meta.url));
+/** Absolute path to injected routes (resolved from dist/ at runtime). */
+const uiverseIndexPage = fileURLToPath(new URL('../src/pages/uiverse-index.astro', import.meta.url));
+const uiversePhasePage = fileURLToPath(
+  new URL('../src/pages/uiverse/[...uiverse].astro', import.meta.url),
+);
+const debugCatalogPage = fileURLToPath(new URL('../src/pages/debug.astro', import.meta.url));
+
 const VIRTUAL_CATALOG_MODULE = 'virtual:starbook/catalog';
 const RESOLVED_VIRTUAL_CATALOG_MODULE = '\0virtual:starbook/catalog';
 
+function normalizeBasePath(raw: string): string {
+  const withLeading = raw.startsWith('/') ? raw : `/${raw}`;
+  const trimmed = withLeading.replace(/\/+$/, '');
+  return trimmed === '' ? '/' : trimmed;
+}
+
 export default function starbook(options: StarbookOptions = {}): AstroIntegration {
-  const base = options.base ?? '/uiverse';
+  const base = normalizeBasePath(options.base ?? '/uiverse');
 
   return {
     name: 'starbook',
     hooks: {
       'astro:config:setup': ({ config, injectRoute, updateConfig, logger }) => {
-        logger.info(`Starbook: Initializing preview route at ${base}/test ...`);
+        logger.info(`Starbook: Uiverse en ${base} (índice, phases y ${base}/debug).`);
         const hostSrcDir = fileURLToPath(new URL('./src', config.root));
 
         updateConfig({
@@ -43,7 +61,8 @@ export default function starbook(options: StarbookOptions = {}): AstroIntegratio
 
                   const result = await buildCatalog({ rootDir: hostSrcDir });
                   const serialized = JSON.stringify(result);
-                  return `export const catalogBuildResult = ${serialized};`;
+                  return `export const catalogBuildResult = ${serialized};
+export const starbookBasePath = ${JSON.stringify(base)};`;
                 },
               },
             ],
@@ -51,8 +70,16 @@ export default function starbook(options: StarbookOptions = {}): AstroIntegratio
         });
 
         injectRoute({
-          pattern: `${base}/test`,
-          entrypoint: previewTestPage,
+          pattern: `${base}`,
+          entrypoint: uiverseIndexPage,
+        });
+        injectRoute({
+          pattern: `${base}/debug`,
+          entrypoint: debugCatalogPage,
+        });
+        injectRoute({
+          pattern: `${base}/[...uiverse]`,
+          entrypoint: uiversePhasePage,
         });
       },
     },
