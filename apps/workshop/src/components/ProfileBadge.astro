@@ -1,0 +1,37 @@
+---
+interface Props {
+  name: string;
+  role: string;
+  active?: boolean;
+}
+
+const { name, role, active = false } = Astro.props;
+---
+
+<article class:list={['badge', { active }]}>
+  <strong>{name}</strong>
+  <span>{role}</span>
+</article>
+
+<style>
+  .badge {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 0.65rem 0.9rem;
+    background: #ffffff;
+    color: #111827;
+  }
+
+  .badge.active {
+    border-color: #16a34a;
+    box-shadow: 0 0 0 2px color-mix(in srgb, #16a34a 18%, transparent);
+  }
+
+  .badge span {
+    font-size: 0.85rem;
+    color: #4b5563;
+  }
+</style>

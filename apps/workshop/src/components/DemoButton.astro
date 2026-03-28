@@ -1,0 +1,39 @@
+---
+interface Props {
+  label: string;
+  variant?: 'primary' | 'secondary';
+  disabled?: boolean;
+}
+
+const { label, variant = 'primary', disabled = false } = Astro.props;
+---
+
+<button class:list={['button', `button-${variant}`]} disabled={disabled}>
+  {label}
+</button>
+
+<style>
+  .button {
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .button-primary {
+    background: #2563eb;
+    color: #ffffff;
+  }
+
+  .button-secondary {
+    background: #e5e7eb;
+    color: #111827;
+  }
+
+  .button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+</style>
