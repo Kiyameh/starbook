@@ -1,15 +1,17 @@
 ---
-import { catalogBuildResult } from 'virtual:starbook/catalog';
+import { catalogBuildResult, starbookBasePath } from 'virtual:starbook/catalog';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Starbook — Increment 1</title>
+    <title>Starbook — Debug catálogo</title>
     <style>
-      :root { color-scheme: dark; }
+      :root {
+        color-scheme: dark;
+      }
       body {
         margin: 0;
         padding: 24px;
@@ -17,8 +19,14 @@ import { catalogBuildResult } from 'virtual:starbook/catalog';
         background: #0d1117;
         color: #e6edf3;
       }
-      h1 { margin: 0 0 12px; font-size: 22px; }
-      p { margin: 0 0 16px; color: #9da7b3; }
+      h1 {
+        margin: 0 0 12px;
+        font-size: 22px;
+      }
+      p {
+        margin: 0 0 16px;
+        color: #9da7b3;
+      }
       pre {
         margin: 0;
         padding: 16px;
@@ -28,11 +36,17 @@ import { catalogBuildResult } from 'virtual:starbook/catalog';
         overflow: auto;
         line-height: 1.4;
       }
+      a {
+        color: #58a6ff;
+      }
     </style>
   </head>
   <body>
-    <h1>Starbook — Scanner and catalog</h1>
-    <p>Catalog build output from the host app <code>src</code> (e.g. <code>apps/workshop/src</code>).</p>
+    <h1>Starbook — JSON del catálogo</h1>
+    <p>
+      Salida de <code>buildCatalog</code> para el <code>src</code> del host. Volver al{' '}
+      <a href={starbookBasePath}>Uiverse</a>.
+    </p>
     <pre>{JSON.stringify(catalogBuildResult, null, 2)}</pre>
   </body>
 </html>

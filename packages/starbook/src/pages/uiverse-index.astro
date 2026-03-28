@@ -1,0 +1,41 @@
+---
+import { catalogBuildResult, starbookBasePath } from 'virtual:starbook/catalog';
+import UiverseShell from './uiverse/UiverseShell.astro';
+import { buildUiversePathParam } from '../modules/uiverse-path/build-uiverse-path-param.js';
+
+const { catalog, diagnostics } = catalogBuildResult;
+
+function firstPhaseHref(): string | null {
+  const c = catalog.constellations[0];
+  if (!c) return null;
+  const s = c.stars[0];
+  if (!s) return null;
+  const p = s.phases[0];
+  if (!p) return null;
+  return `${starbookBasePath}/${buildUiversePathParam(c.slug, s.slug, p.slug)}`;
+}
+
+const first = firstPhaseHref();
+---
+
+<UiverseShell
+  basePath={starbookBasePath}
+  catalog={catalog}
+  diagnostics={diagnostics}
+  activeUiversePath={undefined}
+>
+  <h1>Uiverse</h1>
+  <p class="muted">
+    Catálogo generado desde los archivos <code>*.star.ts</code> del directorio <code>src</code> del
+    proyecto host.
+  </p>
+  {
+    first ? (
+      <p>
+        <a href={first}>Abrir la primera phase</a>
+      </p>
+    ) : (
+      <p class="muted">No hay stars en el catálogo.</p>
+    )
+  }
+</UiverseShell>

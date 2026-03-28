@@ -1,0 +1,59 @@
+---
+import { catalogBuildResult, starbookBasePath } from 'virtual:starbook/catalog';
+import UiverseShell from './UiverseShell.astro';
+import { listPhaseStaticParams } from '../../modules/uiverse-path/list-phase-static-paths.js';
+import { resolveUiversePath } from '../../modules/uiverse-path/resolve-uiverse-path.js';
+
+export function getStaticPaths() {
+  return listPhaseStaticParams(catalogBuildResult.catalog).map((params) => ({ params }));
+}
+
+const raw = Astro.params.uiverse;
+const uiverseParam = Array.isArray(raw) ? raw.join('/') : raw;
+
+const resolved = resolveUiversePath(catalogBuildResult.catalog, uiverseParam);
+
+if (!resolved.ok) {
+  Astro.response.status = 404;
+}
+
+const { diagnostics, catalog } = catalogBuildResult;
+const pageTitle = resolved.ok
+  ? `${resolved.value.star.title} — ${resolved.value.phase.name} · Uiverse`
+  : 'No encontrado · Uiverse';
+---
+
+<UiverseShell
+  basePath={starbookBasePath}
+  catalog={catalog}
+  diagnostics={diagnostics}
+  activeUiversePath={resolved.ok ? uiverseParam : undefined}
+  pageTitle={pageTitle}
+>
+  {
+    resolved.ok ? (
+      <>
+        <h1>{resolved.value.phase.name}</h1>
+        <p class="muted">
+          Star <strong>{resolved.value.star.title}</strong> · Constelación{' '}
+          <code>{resolved.value.constellation.slug}</code>
+        </p>
+        <p class="muted">
+          <code>{resolved.value.star.filePath}</code>
+        </p>
+        <h2 class="muted" style="font-size:14px;margin-top:24px;margin-bottom:8px;">
+          args (preview)
+        </h2>
+        <pre>{JSON.stringify(resolved.value.phase.args, null, 2)}</pre>
+      </>
+    ) : (
+      <>
+        <h1>Ruta no encontrada</h1>
+        <p class="muted">
+          No existe ninguna phase para <code>{uiverseParam ?? ''}</code>. Usa la navegación lateral o
+          vuelve al <a href={starbookBasePath}>inicio del Uiverse</a>.
+        </p>
+      </>
+    )
+  }
+</UiverseShell>
