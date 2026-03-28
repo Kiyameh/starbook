@@ -9,7 +9,8 @@
     "dev:workshop:bootstrap": "corepack pnpm --filter starbook build && turbo run dev --filter=starbook --filter=apps-workshop",
     "build": "turbo run build",
     "build:packages": "corepack pnpm --filter starbook build && corepack pnpm --filter apps-workshop build",
-    "clean": "turbo run clean"
+    "clean": "turbo run clean",
+    "test": "turbo run test"
   },
   "devDependencies": {
     "pnpm": "10.18.3",

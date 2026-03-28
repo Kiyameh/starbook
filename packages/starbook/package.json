@@ -13,7 +13,9 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "peerDependencies": {
     "astro": ">=4.0.0"
@@ -24,6 +26,7 @@
   "devDependencies": {
     "astro": "^6.0.0",
     "rimraf": "^6.0.1",
-    "tsup": "^8.0.0"
+    "tsup": "^8.0.0",
+    "vitest": "^3.0.0"
   }
 }
