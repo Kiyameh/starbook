@@ -27,7 +27,7 @@ Starbook es un framework de documentación para proyectos Astro que genera un ca
 | SSR-first | El catálogo vive en el servidor; nada se fuerza al cliente sin razón |
 | Sin imponer React | El Uiverse y los star files viven en `.ts` / `.astro` / `.mdx` |
 | 0 configuración | Se distribuye como integración Astro o paquete npm listo para usar |
-| Solo dev por defecto | No se traslada al build de producción salvo opción explícita |
+| Solo dev por defecto | Objetivo: no entrar en build de producción salvo opt-in (`includeInBuild`, pendiente en integración) |
 
 ---
 
@@ -121,14 +121,14 @@ export default defineConfig({
 })
 ```
 
-Monta `/uiverse` automáticamente mediante `injectRoute`. Solo activo en dev por defecto.
+Monta `/uiverse` (y rutas relacionadas) mediante `injectRoute`. La política “solo en dev / excluir de producción” depende del flag **`includeInBuild`** (previsto; aún no cableado en la integración — ver §8 Producción).
 
-Opciones de configuración previstas:
+Opciones de configuración:
 
 ```js
 starbook({
   base: '/uiverse',        // ruta base (default: '/uiverse')
-  includeInBuild: false,   // opt-in para publicar el catálogo
+  // includeInBuild: false, // previsto: opt-in para publicar el catálogo en build
 })
 ```
 
@@ -151,11 +151,13 @@ El Uiverse detecta el contexto en que vive y adapta el modelo de navegación:
 
 | Contexto | Modelo | Ejemplo de URL |
 | --- | --- | --- |
-| Ruta inyectada (`/uiverse`) | Paths reales | `/uiverse/components/forms/main/button/disabled` |
+| Ruta inyectada (`/uiverse`) | Paths reales | p. ej. `/uiverse/components/forms/main/demo-button/disabled` |
 | `<Uiverse/>` embebido | Query params del host | `?_star=button&_phase=disabled` |
 
+Los segmentos **star** y **phase** en la URL son **slugs** derivados del `title` de la Star y del **nombre** de la Phase (kebab-case estable), no el texto literal del título salvo coincidencia.
+
 Estructura de paths en ruta inyectada:
-`/uiverse/<constellation-path>/<star>/<phase>`
+`/uiverse/<constellation-path>/<star-slug>/<phase-slug>`
 
 ---
 
@@ -206,8 +208,9 @@ El componente documentado no necesita saber que existe un Wormhole: la intercepc
 
 ## 8. Producción y distribución
 
-- **Default:** el Uiverse no se incluye en el build de producción.
-- **Opt-in:** opción `includeInBuild: true` para publicar el catálogo como sitio de documentación.
+- **Objetivo (Ignition):** por defecto el Uiverse no debería formar parte del sitio de producción del host.
+- **Estado del código (mar 2026):** la opción `includeInBuild` aún **no** está implementada en la integración; si Starbook está en `integrations`, las rutas inyectadas participan en `astro build` como el resto de páginas estáticas. El cierre de esta política está previsto en el **incremento 6** de `planificacion_incremental.md`.
+- **Opt-in (previsto):** `includeInBuild: true` para publicar el catálogo como documentación cuando exista el flag.
 - **Distribución:** paquete npm (`starbook`) + Astro integration. Filosofía 0 configuración.
 
 ---
@@ -249,8 +252,8 @@ Stack del monorepo: `pnpm` + `Turbo` + `TypeScript` + `Astro >=4`
 
 | Decisión | Cuándo resolver |
 | --- | --- |
-| Cómo Starbook renderiza el componente con `args` desde `.star.ts` | Diseño técnico Ignition (crítico) |
-| Estructura interna del router del Uiverse | Diseño técnico Ignition |
+| Cómo Starbook renderiza el componente con `args` desde `.star.ts` | Incremento 3 (crítico) |
+| Estructura interna del router del Uiverse | **Cerrado en I2:** módulo `uiverse-path` + rutas inyectadas Astro (ver `retomar_sesion.md`) |
 | Detección de `.star.ts` en paquetes npm externos | Post-MVP (Orbit) |
 | Wormhole en cliente con funciones | Deep Space o posterior |
 | Inferencia automática de tipos para controls | Orbit |

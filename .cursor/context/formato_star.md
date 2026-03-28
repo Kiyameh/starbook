@@ -100,7 +100,7 @@ export const Disabled = { args: { label: 'Save', disabled: true } }
 - Colisión de slug de Star dentro de la misma Constellation -> warning y resolución con sufijo.
 - Variantes de `constellation` que normalizan a la misma clave -> se agrupan y generan warning.
 
-En Ignition, los errores deben mostrarse de forma clara en dev (log + señal en UI, a precisar).
+En Ignition, los errores deben mostrarse de forma clara en dev. **Estado actual:** el shell del Uiverse lista diagnósticos del último `buildCatalog` (errores/advertencias); la consola del integrador Astro sigue siendo la vía principal para trazas detalladas.
 
 ---
 

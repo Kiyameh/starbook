@@ -2,7 +2,7 @@
 
 Documento de continuidad. Registra el estado exacto de la conceptualización e implementación para retomar sin perder contexto. Actualizar al final de cada sesión de trabajo.
 
-**Última actualización:** 26 mar 2026
+**Última actualización:** 28 mar 2026
 
 ---
 
@@ -11,7 +11,8 @@ Documento de continuidad. Registra el estado exacto de la conceptualización e i
 La base de conceptualización está cerrada y la ejecución incremental ya arrancó.
 
 - Incremento 0: **completado**.
-- Incremento 1: **muy avanzado**.
+- Incremento 1: **completado** (tests automatizados, validación manual, checklist cerrado).
+- Incremento 2: **completado** (navegación Uiverse + URLs de phase + debug JSON).
 
 Implementado en Incremento 1:
 
@@ -21,27 +22,36 @@ Implementado en Incremento 1:
 - Diagnósticos no fatales (errores/warnings).
 - Normalización de `constellation` como path lógico no case-sensitive.
 
-Decisiones técnicas cerradas en esta sesión:
+Implementado en Incremento 2:
+
+- Rutas inyectadas: índice `${base}`, detalle `${base}/[...uiverse]`, `${base}/debug` (JSON de `buildCatalog`).
+- Sidebar de navegación Constellation → Star → Phase.
+- Resolución de URL `constellation…/star/phase` (últimos dos segmentos = star y phase).
+- Módulo `uiverse-path` (`resolveUiversePath`, `buildUiversePathParam`, `listPhaseStaticParams`) con tests.
+- Virtual module exporta `starbookBasePath` alineado con `options.base`.
+- `getStaticPaths` desde el catálogo para `output: 'static'` del host.
+
+Decisiones técnicas cerradas en I1:
 
 - Parsing: AST con TypeScript compiler API.
 - Constellation: identidad por ruta canónica normalizada (segmentos con `/`).
 - Colisiones de star/phase: warning + sufijo incremental (`-2`, `-3`, ...).
 
+Decisiones técnicas cerradas en I2:
+
+- Orden de `injectRoute`: índice y `debug` antes del catch-all para no capturar `debug` como phase.
+- Parámetro spread tratado como string o `string[]` (join) para compatibilidad con Astro.
+- Vista de detalle I2: muestra metadatos y `args` en JSON; el render del componente queda para I3.
+
 ---
 
 ## Próximo paso pendiente
 
-### Cierre formal de Incremento 1
+### Incremento 3 — Render de Phases con `args`
 
-Pendientes para dejar I1 al 100%:
-
-1. Añadir tests automatizados mínimos para scanner/parser/builder.
-2. Afinar presentación DX de diagnósticos en la vista de prueba.
-3. Verificar checklist de terminado del incremento y registrar decisiones finales.
-
-### Paso siguiente
-
-Tras cerrar I1, iniciar Incremento 2 (navegación real de Uiverse por ruta inyectada).
+- Pipeline de render Star + Phase activa.
+- Props desde `args` estáticos.
+- Errores visibles en dev cuando la Star es inválida.
 
 ---
 
@@ -57,6 +67,7 @@ Tras cerrar I1, iniciar Incremento 2 (navegación real de Uiverse por ruta inyec
 | 6 | `wormhole.md` | Contrato base y límites técnicos | `formato_star.md` |
 | 7 | `mvp_ignition.md` | Scope y criterios globales de v0.1 | Todos los anteriores |
 | 8 | `planificacion_incremental.md` | Roadmap incremental desde core hasta MVP | Todos los anteriores |
+| 9 | `starbook.md` | Identidad visual y branding (referencia) | — |
 
 ---
 
@@ -85,6 +96,5 @@ Tras cerrar I1, iniciar Incremento 2 (navegación real de Uiverse por ruta inyec
 ## Cómo empezar la próxima sesión
 
 1. Leer este archivo.
-2. Cerrar pendientes de Incremento 1.
-3. Confirmar checklist de terminado.
-4. Arrancar Incremento 2.
+2. Si hace falta, repasar `planificacion_incremental.md` incremento 3.
+3. Arrancar Incremento 3 (render de Phase con `args`).

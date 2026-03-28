@@ -40,27 +40,29 @@ starbook/
 1. Proyecto host inicia `astro dev` con integración de Starbook.
 2. Starbook escanea los star files.
 3. Se construye un catálogo interno (Constellation/Star/Phase) normalizando `constellation` como path lógico.
-4. Se inyecta la ruta `/uiverse` (o se monta `<Uiverse/>` embebido).
-5. Uiverse renderiza la Phase seleccionada usando `args`.
-6. Si hay Wormholes, se resuelven vía virtual modules en SSR.
+4. Se inyectan rutas bajo la base configurada (p. ej. índice `/uiverse`, detalle `[...uiverse]`, `/uiverse/debug`; ver integración en `packages/starbook`).
+5. Uiverse muestra navegación (sidebar) y, en la Phase seleccionada, metadatos y vista previa de `args` (JSON). El **render del componente Astro con esas props** forma parte del Incremento 3 (aún no cerrado en el core).
+6. Cuando exista Wormhole (Incremento 5), se resuelven bindings vía virtual modules en SSR.
 
 ---
 
 ## 4) Contratos entre módulos (borrador)
 
-- `scanner` -> produce lista normalizada de `StarModule`.
-- `catalog-builder` -> transforma módulos en árbol navegable y resuelve normalización/colisiones.
-- `router-adapter` -> traduce URL/query en `RouteState`.
-- `renderer` -> recibe `PhaseRenderModel` y compone vista.
-- `wormhole-registry` -> registra y resuelve bindings por alias.
+- `scanner` → produce rutas de `*.star.ts` listas para parsear (workshop: `scan-star-files`).
+- `parser` + `catalog` (`buildCatalog` / `build-catalog-tree`) → árbol Constellation > Star > Phase y diagnósticos.
+- `uiverse-path` → construye el segmento de URL por Phase y resuelve `.../constellation…/star/phase` → nodo del catálogo (sustituye buena parte del “router-adapter” hasta que exista un `RouteState` formal).
+- Páginas inyectadas (`uiverse-index`, `[...uiverse]`, `debug`) → shell UI + `getStaticPaths` en modo estático del host.
+- `renderer` (pendiente I3) → `PhaseRenderModel` + componente + `args` en vista real.
+- `wormhole-registry` (pendiente I5) → registra y resuelve bindings por alias.
 
 ---
 
 ## 5) Build y distribución (objetivo Ignition)
 
 - Paquete npm principal: `starbook`.
-- Modo por defecto: activo en desarrollo, excluido de producción.
-- Opción de publicación de catálogo: `includeInBuild: true` (opt-in).
+- **Objetivo:** activo en desarrollo; excluido del sitio de producción del host salvo opt-in.
+- **Estado actual:** la exclusión de rutas en `astro build` no está implementada; `includeInBuild` está planificado (incremento 6).
+- Opción prevista de publicación de catálogo: `includeInBuild: true` (opt-in).
 
 ---
 

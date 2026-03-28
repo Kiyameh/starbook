@@ -77,9 +77,9 @@ export interface WormholeBinding<T = unknown> {
 
 ## 5) Vistas derivadas necesarias para el producto
 
-- `CatalogTree`: estructura jerárquica para sidebar y navegación.
-- `PhaseRenderModel`: metadatos y args de la Phase activa para render.
-- `RouteState`: estado de ruta (`constellation`, `star`, `phase`) o query params en modo embebido.
+- `CatalogTree`: estructura jerárquica para sidebar y navegación (implementada vía `StarCatalog` del builder).
+- `PhaseRenderModel`: metadatos y args de la Phase activa para render (parcialmente cubierto en UI: se muestran en detalle; falta componer con el componente Astro — I3).
+- `RouteState`: en modo ruta inyectada, la resolución equivalente está en **`resolveUiversePath(catalog, param)`** (`packages/starbook`, módulo `uiverse-path`). Modo embebido con query params: pendiente de alinear cuando exista `<Uiverse/>`.
 
 ---
 

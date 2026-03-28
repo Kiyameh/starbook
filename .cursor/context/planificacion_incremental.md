@@ -67,6 +67,13 @@ Principio: entregar valor temprano, validar, y decidir detalles durante el desar
 - Estructura interna del router del Uiverse.
 - Manejo de rutas inválidas.
 
+**Decisiones tomadas (28 mar 2026)**
+- Tres rutas inyectadas en orden fijo: índice `${base}`, `${base}/debug` (JSON de `buildCatalog`), catch-all `${base}/[...uiverse]`, para no capturar `debug` como segmentos de Phase.
+- Virtual module `virtual:starbook/catalog` exporta además `starbookBasePath` alineado con `options.base` (normalizado: barra inicial, sin barra final).
+- Lógica de URL en paquete: módulo `uiverse-path` (`buildUiversePathParam`, `resolveUiversePath`, `listPhaseStaticParams`) con tests.
+- Host en `output: 'static'`: la ruta de detalle declara `getStaticPaths` a partir del catálogo.
+- Detalle de Phase en I2: metadatos + `args` como JSON; el render del componente queda para I3.
+
 **Validación**
 - Se puede abrir cualquier Phase detectada mediante URL directa.
 

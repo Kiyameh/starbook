@@ -38,12 +38,12 @@ Habilitar a un **autor de componentes** para documentar componentes Astro con St
 
 - Un componente con `*.star.ts` válido aparece en `/uiverse`.
 - Una Star con múltiples Phases permite navegación por URL.
-- Cada Phase renderiza los `args` definidos.
+- Cada Phase renderiza los `args` definidos (objetivo MVP; **pendiente de pipeline de render en core** — hoy el detalle en Uiverse puede mostrar `args` sin montar aún el componente documentado).
 - Colisiones de slug (star/phase) se resuelven con sufijos y warning en dev.
 - `*.star.mdx` enriquece documentación cuando está presente.
 - Wormhole SSR permite usar datos reales con import alias.
 - Si no hay Wormhole válido, existe fallback controlado en dev.
-- Por defecto, Uiverse no se incluye en build de producción.
+- Por defecto, Uiverse no se incluye en build de producción (**criterio objetivo**; el flag `includeInBuild` y el exclude efectivo en build están pendientes — ver incremento 6 —; hoy las rutas se generan en `astro build` si la integración está activa).
 
 ---
 

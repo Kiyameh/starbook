@@ -3,6 +3,8 @@
 Documento de flujos end-to-end para el MVP Ignition. Define actores, objetivos, recorridos y criterios de aceptación.  
 Decisión de producto vigente: **usuario principal = Autor de componentes**.
 
+**Estado frente al código (mar 2026):** el **Incremento 2** cubre navegación por sidebar, URLs compartibles y vista de detalle con metadatos + `args` en JSON. Los criterios de **J1/J2** que exigen **render del componente** con esas props se cumplen cuando esté cerrado el **Incremento 3** (pipeline de render).
+
 ---
 
 ## 1) Actores y peso en el MVP
@@ -138,7 +140,7 @@ Decisión de producto vigente: **usuario principal = Autor de componentes**.
 
 **Criterios de aceptación (Ignition)**
 - Integración funcional con configuración por defecto.
-- Uiverse solo en dev por defecto (`includeInBuild: false`).
+- Uiverse solo en dev por defecto (`includeInBuild: false`) — **pendiente de implementar el flag**; hasta entonces, asumir que el build estático puede incluir rutas Uiverse si Starbook está activo.
 
 ---
 
