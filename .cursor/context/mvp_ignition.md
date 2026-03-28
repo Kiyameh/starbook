@@ -16,6 +16,7 @@ Habilitar a un **autor de componentes** para documentar componentes Astro con St
 - Integración Astro con ruta inyectada por defecto (`/uiverse`).
 - Detección de `*.star.ts` en el proyecto host.
 - Render de catálogo por Constellation > Star > Phase.
+- Normalización de `constellation` como path lógico (no case-sensitive, separador `/`).
 - Render de Phases estáticas usando `args`.
 - Soporte opcional de `*.star.mdx` para narrativa.
 - Wormhole SSR vía virtual modules.
@@ -38,6 +39,7 @@ Habilitar a un **autor de componentes** para documentar componentes Astro con St
 - Un componente con `*.star.ts` válido aparece en `/uiverse`.
 - Una Star con múltiples Phases permite navegación por URL.
 - Cada Phase renderiza los `args` definidos.
+- Colisiones de slug (star/phase) se resuelven con sufijos y warning en dev.
 - `*.star.mdx` enriquece documentación cuando está presente.
 - Wormhole SSR permite usar datos reales con import alias.
 - Si no hay Wormhole válido, existe fallback controlado en dev.

@@ -10,7 +10,7 @@ Se irá refinando durante el desarrollo con decisiones técnicas concretas.
 | Entidad | Descripción | Identidad sugerida |
 | --- | --- | --- |
 | `Uiverse` | Catálogo navegable de documentación de componentes | `basePath` |
-| `Constellation` | Agrupación funcional de Stars (ej. Forms) | `slug` |
+| `Constellation` | Agrupación funcional/path de Stars (ej. `components/forms/main`) | `canonicalPath` |
 | `Star` | Unidad de documentación de un componente Astro | `slug` + `sourceFile` |
 | `Phase` | Variante/estado renderizable de una Star | `slug` dentro de `star` |
 | `WormholeBinding` | Registro de datos inyectados por alias | `importName` |
@@ -32,7 +32,8 @@ Se irá refinando durante el desarrollo con decisiones técnicas concretas.
 - Cada `Star` debe declarar `component`, `constellation` y `title` en su `default export`.
 - Cada `Star` debe tener al menos una `Phase` exportada.
 - Cada `Phase` tiene nombre único dentro de su `Star`.
-- Los slugs de Constellation/Star/Phase deben ser estables para URLs.
+- Constellation se identifica por `canonicalPath` normalizado (no case-sensitive, segmentos con `/`).
+- Los slugs de Star/Phase deben ser estables para URLs.
 - `WormholeBinding.importName` debe ser único en su scope efectivo para evitar colisiones.
 - Si un Wormhole no resuelve dato, el sistema responde con `undefined` y warning en dev.
 
@@ -85,6 +86,7 @@ export interface WormholeBinding<T = unknown> {
 ## 6) Decisiones pendientes para iteraciones siguientes
 
 - Tipado exacto de `component` para Astro (contrato interno final).
-- Política de colisiones de slugs (normalización y fallback).
+- Inferencia de `constellation` desde el folder del star file.
+- Modelo de subconstellations en UI (árbol navegable por segmentos).
 - Scope formal de Wormhole (global vs por Star) y precedencia.
 - Estrategia de serialización entre SSR y cliente.

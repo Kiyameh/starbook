@@ -44,6 +44,11 @@ Principio: entregar valor temprano, validar, y decidir detalles durante el desar
 - Técnica de parsing (AST vs import dinámico controlado).
 - Normalización de slugs y colisiones.
 
+**Decisiones tomadas (sesión 26 mar 2026)**
+- Parsing adoptado: **AST** con TypeScript compiler API.
+- `constellation` normalizada como path lógico no case-sensitive (segmentos `/`).
+- Constellations se agrupan por clave canónica; stars/phases colisionadas se resuelven con sufijos y warning.
+
 **Validación**
 - Dado un set de stars de prueba, se genera árbol consistente.
 

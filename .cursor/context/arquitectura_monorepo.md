@@ -39,7 +39,7 @@ starbook/
 
 1. Proyecto host inicia `astro dev` con integración de Starbook.
 2. Starbook escanea los star files.
-3. Se construye un catálogo interno (Constellation/Star/Phase).
+3. Se construye un catálogo interno (Constellation/Star/Phase) normalizando `constellation` como path lógico.
 4. Se inyecta la ruta `/uiverse` (o se monta `<Uiverse/>` embebido).
 5. Uiverse renderiza la Phase seleccionada usando `args`.
 6. Si hay Wormholes, se resuelven vía virtual modules en SSR.
@@ -49,7 +49,7 @@ starbook/
 ## 4) Contratos entre módulos (borrador)
 
 - `scanner` -> produce lista normalizada de `StarModule`.
-- `catalog-builder` -> transforma módulos en árbol navegable.
+- `catalog-builder` -> transforma módulos en árbol navegable y resuelve normalización/colisiones.
 - `router-adapter` -> traduce URL/query en `RouteState`.
 - `renderer` -> recibe `PhaseRenderModel` y compone vista.
 - `wormhole-registry` -> registra y resuelve bindings por alias.

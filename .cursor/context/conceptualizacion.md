@@ -35,7 +35,7 @@ Starbook es un framework de documentación para proyectos Astro que genera un ca
 
 ```text
 Uiverse
-└── Constellation  (grupo funcional: "Forms", "Navigation"...)
+└── Constellation  (grupo funcional/path: "components/forms/main"...)
     └── Star        (componente: Button, Card...)
         └── Phase   (estado/variante: Default, Disabled, Mobile...)
 ```
@@ -43,7 +43,7 @@ Uiverse
 | Entidad | Concepto técnico | Descripción |
 | --- | --- | --- |
 | **Uiverse** | Dashboard / catálogo | Página generada bajo `/uiverse`, solo en dev |
-| **Constellation** | Grupo / carpeta | Agrupa Stars del mismo área funcional |
+| **Constellation** | Grupo / path lógico | Agrupa Stars del mismo área funcional; no case-sensitive |
 | **Star** | Componente documentado | Representa un componente `.astro` con sus variantes |
 | **Phase** | Estado / story | Cada variante de la Star con props concretas |
 | **Wormhole** | Inyector de datos | Mecanismo para pasar datos reales del proyecto a una Star |
@@ -63,7 +63,7 @@ import Button from './Button.astro'
 
 export default {
   component: Button,
-  constellation: 'Forms',
+  constellation: 'components/forms/main',
   title: 'Button',
 }
 
@@ -81,7 +81,7 @@ Propiedades del export `default`:
 | Propiedad | Tipo | Descripción |
 | --- | --- | --- |
 | `component` | `AstroComponent` | El componente a documentar |
-| `constellation` | `string` | Grupo al que pertenece |
+| `constellation` | `string` | Path lógico al que pertenece (ej. `components/forms/main`) |
 | `title` | `string` | Nombre mostrado en el Uiverse |
 
 ### Archivo secundario — `Button.star.mdx` (opcional)
@@ -151,11 +151,11 @@ El Uiverse detecta el contexto en que vive y adapta el modelo de navegación:
 
 | Contexto | Modelo | Ejemplo de URL |
 | --- | --- | --- |
-| Ruta inyectada (`/uiverse`) | Paths reales | `/uiverse/forms/button/disabled` |
+| Ruta inyectada (`/uiverse`) | Paths reales | `/uiverse/components/forms/main/button/disabled` |
 | `<Uiverse/>` embebido | Query params del host | `?_star=button&_phase=disabled` |
 
 Estructura de paths en ruta inyectada:
-`/uiverse/<constellation>/<star>/<phase>`
+`/uiverse/<constellation-path>/<star>/<phase>`
 
 ---
 
@@ -254,4 +254,6 @@ Stack del monorepo: `pnpm` + `Turbo` + `TypeScript` + `Astro >=4`
 | Detección de `.star.ts` en paquetes npm externos | Post-MVP (Orbit) |
 | Wormhole en cliente con funciones | Deep Space o posterior |
 | Inferencia automática de tipos para controls | Orbit |
+| Inferencia automática de Constellation por carpeta | Post-Ignition |
+| Modelo UI de subconstellations (árbol anidado) | Post-Ignition |
 | Usuarios principales del Uiverse (pesos por fase) | Pendiente — ver `retomar_sesion.md` |
